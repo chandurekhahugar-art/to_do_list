@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>To Do List</title>
+<style>
+body {
+  font-family: Arial;
+  background: linear-gradient(to right, #00c6ff, #000000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  box-shadow: 10px 5px 20px black;
+  padding: 20px;
+  border-radius: 10px;
+  background: yellow;
+  text-align: center;
+  width: 300px;
+}
+
+li {
+  margin: 8px 0;
+  border: 1px solid gray;
+  padding: 5px;
+  list-style: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>To Do List</h2>
+
+  <input type="text" id="task" placeholder="Enter a task">
+  <button onclick="addTask()">Add</button>
+
+  <ul id="list"></ul>
+</div>
+
+<script>
+function addTask() {
+  let task = document.getElementById("task").value;
+  if (task === "") return;
+
+  let li = document.createElement("li");
+
+  li.innerHTML =
+    "<span>" + task + "</span> " +
+    "<button onclick='editTask(this)'>Edit</button> " +
+    "<button onclick='this.parentElement.remove()'>Delete</button>";
+
+  document.getElementById("list").appendChild(li);
+  document.getElementById("task").value = "";
+}
+
+function editTask(btn) {
+  let li = btn.parentElement;
+  let span = li.querySelector("span");
+
+  if (btn.innerText === "Edit") {
+    let input = document.createElement("input");
+    input.value = span.innerText;
+    li.replaceChild(input, span);
+    btn.innerText = "Save";
+  } else {
+    let input = li.querySelector("input");
+    let newSpan = document.createElement("span");
+    newSpan.innerText = input.value;
+    li.replaceChild(newSpan, input);
+    btn.innerText = "Edit";
+  }
+}
+</script>
+</body>
+</html>
